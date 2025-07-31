@@ -9,8 +9,8 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import * as React from 'react'
 import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary'
 import { NotFound } from '~/components/NotFound'
-import { ThemeSwitcher } from '~/components/ThemeSwitcher'
 import { ThemeProvider } from '~/components/ThemeProvider'
+import { ThemeSwitcher } from '~/components/ThemeSwitcher'
 import appCss from '~/styles/app.css?url'
 import { seo } from '~/utils/seo'
 
@@ -25,7 +25,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       ...seo({
-        title: 'John Annunziato | Full-Stack Developer',
+        title: 'John Annunziato III | Full-Stack Developer',
         description: 'Personal blog and portfolio of John Annunziato, a full-stack developer sharing insights on web development, technology, and programming.',
       }),
     ],
@@ -73,15 +73,18 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body className="min-h-screen antialiased">
         <ThemeProvider>
           <header className="border-b border-border backdrop-blur-sm bg-background/80 sticky top-0 z-50">
-            <nav className="max-w-3xl mx-auto px-6 py-6">
-              <div className="flex items-center justify-between">
+            <nav className="max-w-3xl mx-auto px-4 sm:px-6">
+              <div className="flex items-center justify-between h-16 sm:h-20">
                 <Link
                   to="/"
-                  className="text-lg font-medium text-foreground hover:text-muted-foreground transition-colors"
+                  className="text-base sm:text-lg font-medium text-foreground hover:text-muted-foreground transition-colors flex-shrink-0"
                 >
-                  John Annunziato
+                  <span className="hidden sm:inline">John Annunziato III</span>
+                  <span className="sm:hidden">JA3</span>
                 </Link>
-                <div className="flex items-center space-x-6 text-sm">
+
+                {/* Desktop Navigation */}
+                <div className="hidden md:flex items-center space-x-6 text-sm">
                   <Link
                     to="/"
                     activeProps={{
@@ -119,10 +122,54 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                   >
                     Contact
                   </Link>
-                <ThemeSwitcher />
+                  <ThemeSwitcher />
+                </div>
+
+                {/* Mobile Navigation */}
+                <div className="flex md:hidden items-center space-x-2">
+                  <ThemeSwitcher />
+                  <div className="flex items-center space-x-1 text-xs">
+                    <Link
+                      to="/"
+                      activeProps={{
+                        className: 'text-foreground bg-muted',
+                      }}
+                      activeOptions={{ exact: true }}
+                      className="text-muted-foreground hover:text-foreground transition-colors px-2 py-1 rounded-md"
+                    >
+                      Home
+                    </Link>
+                    <Link
+                      to="/blog"
+                      activeProps={{
+                        className: 'text-foreground bg-muted',
+                      }}
+                      className="text-muted-foreground hover:text-foreground transition-colors px-2 py-1 rounded-md"
+                    >
+                      Blog
+                    </Link>
+                    <Link
+                      to="/about"
+                      activeProps={{
+                        className: 'text-foreground bg-muted',
+                      }}
+                      className="text-muted-foreground hover:text-foreground transition-colors px-2 py-1 rounded-md"
+                    >
+                      Projects
+                    </Link>
+                    <Link
+                      to="/contact"
+                      activeProps={{
+                        className: 'text-foreground bg-muted',
+                      }}
+                      className="text-muted-foreground hover:text-foreground transition-colors px-2 py-1 rounded-md"
+                    >
+                      Contact
+                    </Link>
+                  </div>
+                </div>
               </div>
-            </div>
-          </nav>
+            </nav>
           </header>
           <main className="max-w-3xl mx-auto px-6 py-12 min-h-screen">
             {children}
@@ -131,11 +178,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <div className="max-w-3xl mx-auto px-6 py-8">
               <div className="flex items-center justify-between text-sm">
                 <p className="text-muted-foreground">
-                  John Annunziato - 2025
+                  John Annunziato III - 2025
                 </p>
                 <div className="flex items-center space-x-6">
                   <a
-                    href="https://github.com/johnannunziato"
+                    href="https://github.com/ja3nyc"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-neutral-500 hover:text-neutral-100 transition-colors"
@@ -143,7 +190,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                     GitHub
                   </a>
                   <a
-                    href="https://linkedin.com/in/johnannunziato"
+                    href="https://linkedin.com/in/jannunziato"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-neutral-500 hover:text-neutral-100 transition-colors"
@@ -151,7 +198,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                     LinkedIn
                   </a>
                   <a
-                    href="https://twitter.com/johnannunziato"
+                    href="https://twitter.com/ja3nyc"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-neutral-500 hover:text-neutral-100 transition-colors"

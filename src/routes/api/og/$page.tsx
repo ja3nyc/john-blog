@@ -2,7 +2,7 @@ import { createServerFileRoute } from '@tanstack/react-start/server';
 import { generateOpenGraphImage } from '~/utils/generateOpenGraph';
 
 const routeTitles: Record<string, { title: string; subtitle: string }> = {
-    'home': { title: 'John Annunziato', subtitle: 'Software Engineer & Writer' },
+    'home': { title: 'John Annunziato', subtitle: 'Software Engineer & Founder' },
     'blog': { title: 'Blog', subtitle: 'Thoughts on software development' },
     'about': { title: 'Projects', subtitle: 'Things I\'ve built' },
     'contact': { title: 'Contact', subtitle: 'Get in touch' },
