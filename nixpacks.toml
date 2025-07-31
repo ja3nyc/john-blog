@@ -1,11 +1,4 @@
+buildImage = 'ghcr.io/railwayapp/nixpacks:latest'
+
 [phases.setup]
-nixPkgs = ["nodejs-22_x", "bun"]
-
-[phases.build]
-cmds = ["bun install", "bun run build"]
-
-[phases.start]
-cmd = "bun run start"
-
-[variables]
-NODE_VERSION = "22.17.0"
+  nixpkgsArchive = '11cb3517b3af6af300dd6c055aeda73c9bf52c48'
