@@ -1,0 +1,85 @@
+---
+title: "Interactive React Components in MDX"
+date: "2024-01-20"
+excerpt: "Learn how to embed interactive React components directly in your blog posts using MDX."
+tags: ["React", "MDX", "Interactive", "Components"]
+---
+
+import { Counter } from '../../src/components/mdx/Counter'
+import { CodeBlock } from '../../src/components/mdx/CodeBlock'
+import { Callout } from '../../src/components/mdx/Callout'
+
+# Interactive React Components in MDX
+
+MDX allows you to seamlessly blend Markdown with React components, creating rich, interactive blog posts. This opens up endless possibilities for creating engaging content that goes beyond static text.
+
+## What is MDX?
+
+MDX is a format that lets you use JSX in your Markdown content. You can import components, such as interactive charts or alerts, and embed them within your content.
+
+<Callout type="info">
+  MDX combines the simplicity of Markdown with the power of React components, making it perfect for technical blogs and documentation.
+</Callout>
+
+## Interactive Components
+
+Here's a simple interactive counter component embedded directly in this blog post:
+
+<Counter initialValue={5} />
+
+The beauty of MDX is that you can create reusable components and use them across multiple blog posts. This counter maintains its state and responds to user interactions just like any React component.
+
+## Code Examples with Syntax Highlighting
+
+You can also create enhanced code blocks with features like copy-to-clipboard:
+
+<CodeBlock language="tsx" title="Counter.tsx" showLineNumbers>
+{`import { useState } from 'react'
+
+export function Counter({ initialValue = 0 }) {
+  const [count, setCount] = useState(initialValue)
+
+  return (
+    <div className="flex items-center space-x-4">
+      <button onClick={() => setCount(count - 1)}>-</button>
+      <span>{count}</span>
+      <button onClick={() => setCount(count + 1)}>+</button>
+    </div>
+  )
+}`}
+</CodeBlock>
+
+## Callouts and Alerts
+
+Different types of callouts help highlight important information:
+
+<Callout type="warning" title="Performance Consideration">
+  When using interactive components in MDX, be mindful of bundle size and client-side JavaScript. Only add interactivity where it truly enhances the user experience.
+</Callout>
+
+<Callout type="success">
+  MDX components are perfect for tutorials, demos, and interactive examples that help readers understand complex concepts.
+</Callout>
+
+## Benefits of MDX
+
+1. **Rich Content**: Embed interactive demos, charts, and widgets
+2. **Reusable Components**: Create once, use everywhere
+3. **Better Learning**: Interactive examples help readers understand concepts
+4. **Maintainable**: Components can be updated independently
+5. **SEO Friendly**: Still generates semantic HTML
+
+## Getting Started
+
+To use MDX in your blog:
+
+1. Install MDX dependencies
+2. Configure your build system
+3. Create reusable components
+4. Import and use them in your `.mdx` files
+
+<Callout type="info" title="Pro Tip">
+  Start simple with basic components like callouts and code blocks, then gradually add more complex interactive elements as needed.
+</Callout>
+
+MDX transforms static blog posts into interactive experiences, making technical content more engaging and educational for your readers.
