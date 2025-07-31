@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["nodejs-22_x", "bun"]
+
+[phases.build]
+cmds = ["bun install", "bun run build"]
+
+[phases.start]
+cmd = "bun run start"
+
+[variables]
+NODE_VERSION = "22.17.0"
