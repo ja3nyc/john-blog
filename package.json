@@ -2,6 +2,7 @@
   "name": "ja3nyc-monorepo",
   "private": true,
   "type": "module",
+  "engines": { "node": ">=20" },
   "packageManager": "bun@1.2.19",
   "workspaces": [
     "apps/*",
