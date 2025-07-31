@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "start": "bun .output/server/index.mjs"
+    "start": "wrangler pages dev .output/public"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.6",
