@@ -7,12 +7,12 @@ export const ServerRoute = createServerFileRoute('/api/og/blog/$slug').methods({
         try {
             const slug = params.slug;
             const post = await getPostBySlug(slug);
-            
+
             if (!post) {
                 return new Response('Blog post not found', { status: 404 });
             }
 
-            const image = await generateOpenGraphImage({ 
+            const image = await generateOpenGraphImage({
                 title: post.title,
                 subtitle: 'Blog Post'
             });

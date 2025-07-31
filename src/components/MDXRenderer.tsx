@@ -1,5 +1,3 @@
-'use client'
-
 import { MDXRemote } from 'next-mdx-remote'
 import { Counter } from './mdx/Counter'
 import { CodeBlock } from './mdx/CodeBlock'
