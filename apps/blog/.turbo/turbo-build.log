@@ -1,0 +1,55 @@
+
+[0m[2m[35m$[0m [2m[1mvite build[0m
+[36mvite v6.3.5 [32mbuilding for production...[36m[39m
+Generated route tree in 77ms
+[2K[1Gtransforming (1) [2m../../../../../~start/default-client-entry.tsx[22m[2K[1Gtransforming (25) [2m../../node_modules/@tanstack/router-core/dist/esm/ssr/client.js[22m[2K[1Gtransforming (89) [2m../../node_modules/react-dom/cjs/react-dom-client.production.js[22m[2K[1Gtransforming (127) [2msrc/components/ThemeSwitcher.tsx[22m[2K[1G[2K[1G[2K[1G[32m✓[39m 178 modules transformed.
+[2K[1Grendering chunks (1)...[2K[1Grendering chunks (2)...[2K[1Grendering chunks (3)...[2K[1Grendering chunks (4)...[2K[1Grendering chunks (5)...[2K[1Grendering chunks (6)...[2K[1Grendering chunks (7)...[2K[1G[2K[1Gcomputing gzip size (0)...[2K[1Gcomputing gzip size (1)...[2K[1Gcomputing gzip size (2)...[2K[1Gcomputing gzip size (3)...[2K[1Gcomputing gzip size (4)...[2K[1Gcomputing gzip size (5)...[2K[1Gcomputing gzip size (6)...[2K[1Gcomputing gzip size (7)...[2K[1Gcomputing gzip size (8)...[2K[1Gcomputing gzip size (9)...[2K[1G[2m.tanstack/start/build/client-dist/[22m[32m.vite/manifest.json              [39m[1m[2m  2.45 kB[22m[1m[22m[2m │ gzip:  0.49 kB[22m
+[2m.tanstack/start/build/client-dist/[22m[2massets/[22m[35mapp-CCOR62XA.css          [39m[1m[2m 32.67 kB[22m[1m[22m[2m │ gzip:  5.54 kB[22m
+[2m.tanstack/start/build/client-dist/[22m[2massets/[22m[36mRelativeTime-Dh8pGMxV.js  [39m[1m[2m  0.76 kB[22m[1m[22m[2m │ gzip:  0.45 kB[22m
+[2m.tanstack/start/build/client-dist/[22m[2massets/[22m[36mblog.index-DpBbc-FT.js    [39m[1m[2m  1.82 kB[22m[1m[22m[2m │ gzip:  0.69 kB[22m
+[2m.tanstack/start/build/client-dist/[22m[2massets/[22m[36mindex-DIQegMEX.js         [39m[1m[2m  2.04 kB[22m[1m[22m[2m │ gzip:  0.81 kB[22m
+[2m.tanstack/start/build/client-dist/[22m[2massets/[22m[36mcontact-Ckfu3pgY.js       [39m[1m[2m  2.99 kB[22m[1m[22m[2m │ gzip:  1.21 kB[22m
+[2m.tanstack/start/build/client-dist/[22m[2massets/[22m[36mabout-CzTm_Bks.js         [39m[1m[2m  5.72 kB[22m[1m[22m[2m │ gzip:  1.29 kB[22m
+[2m.tanstack/start/build/client-dist/[22m[2massets/[22m[36mblog._slug-CT8Wdck7.js    [39m[1m[2m  6.34 kB[22m[1m[22m[2m │ gzip:  2.16 kB[22m
+[2m.tanstack/start/build/client-dist/[22m[2massets/[22m[36mmain-DEHKC4Co.js          [39m[1m[2m292.97 kB[22m[1m[22m[2m │ gzip: 92.98 kB[22m
+[32m✓ built in 893ms[39m
+[36mvite v6.3.5 [32mbuilding SSR bundle for production...[36m[39m
+[2K[1Gtransforming (1) [2m../../../../../~start/server-entry.tsx[22m[2K[1Gtransforming (41) [2msrc/utils/markdown.server.ts[22m[2K[1G[33m"createRequestHandler", "defineHandlerCallback", "transformPipeableStreamWithRouter" and "transformReadableStreamWithRouter" are imported from external module "@tanstack/router-core/ssr/server" but never used in "../../node_modules/@tanstack/start-server-core/dist/esm/createStartHandler.js" and "../../node_modules/@tanstack/start-server-core/dist/esm/index.js".[39m
+[2K[1G[33m"H3Error", "MIMES", "callNodeListener", "createApp", "createAppEventHandler", "createError", "createEvent", "createRouter", "defineLazyEventHandler", "defineNodeListener", "defineNodeMiddleware", "defineRequestMiddleware", "defineResponseMiddleware", "defineWebSocket", "dynamicEventHandler", "fromNodeMiddleware", "fromPlainHandler", "fromWebHandler", "isCorsOriginAllowed", "isError", "isEventHandler", "isStream", "isWebResponse", "lazyEventHandler", "promisifyNodeListener", "sanitizeStatusCode", "sanitizeStatusMessage", "serveStatic", "splitCookiesString", "toEventHandler", "toNodeListener", "toPlainHandler", "toWebHandler" and "useBase" are imported from external module "h3" but never used in "../../node_modules/@tanstack/start-server-core/dist/esm/h3.js" and "../../node_modules/@tanstack/start-server-core/dist/esm/index.js".[39m
+[2K[1G[32m✓[39m 74 modules transformed.
+[2K[1Grendering chunks (1)...[2K[1Grendering chunks (2)...[2K[1Grendering chunks (3)...[2K[1Grendering chunks (4)...[2K[1Grendering chunks (5)...[2K[1Grendering chunks (6)...[2K[1Grendering chunks (7)...[2K[1Grendering chunks (8)...[2K[1Grendering chunks (9)...[2K[1Grendering chunks (10)...[2K[1Grendering chunks (11)...[2K[1Grendering chunks (12)...[2K[1Grendering chunks (13)...[2K[1G[33m[plugin vite:css-post] Sourcemap is likely to be incorrect: a plugin (vite:css-post) was used to transform files, but didn't generate a sourcemap for the transformation. Consult the plugin documentation for help[39m
+[2K[1G[32m✓ built in 235ms[39m
+[32m✔[39m Generated public [36m.output/public[39m                                                       [90mnitro[39m [90m12:22:11 PM[39m
+[36mℹ[39m Building Nitro Server (preset: [36mbun[39m, compatibility date: [36m2024-11-13[39m)                   [90mnitro[39m [90m12:22:11 PM[39m
+[32m✔[39m Nitro Server built                                                                    [90mnitro[39m [90m12:22:12 PM[39m
+[90m  ├─ .output/server/chunks/_/_tanstack-start-manifest_v-DfX4FPNz.mjs (1.28 kB)[39m[90m (433 B gzip)[39m
+[90m  ├─ .output/server/chunks/_/_tanstack-start-manifest_v-DfX4FPNz.mjs.map (126 B)[39m[90m (126 B gzip)[39m
+[90m  ├─ .output/server/chunks/_/_tanstack-start-server-fn-manifest_v-CT9mTFAi.mjs (716 B)[39m[90m (296 B gzip)[39m
+[90m  ├─ .output/server/chunks/_/_tanstack-start-server-fn-manifest_v-CT9mTFAi.mjs.map (149 B)[39m[90m (132 B gzip)[39m
+[90m  ├─ .output/server/chunks/_/about-BpjnCZE8.mjs (7.3 kB)[39m[90m (1.41 kB gzip)[39m
+[90m  ├─ .output/server/chunks/_/about-BpjnCZE8.mjs.map (3.73 kB)[39m[90m (637 B gzip)[39m
+[90m  ├─ .output/server/chunks/_/blog._slug-Bjne3DqB.mjs (3.39 kB)[39m[90m (1.08 kB gzip)[39m
+[90m  ├─ .output/server/chunks/_/blog._slug-Bjne3DqB.mjs.map (1.51 kB)[39m[90m (632 B gzip)[39m
+[90m  ├─ .output/server/chunks/_/blog._slug-ZXzrnlKG.mjs (4.79 kB)[39m[90m (1.53 kB gzip)[39m
+[90m  ├─ .output/server/chunks/_/blog._slug-ZXzrnlKG.mjs.map (3.29 kB)[39m[90m (1.23 kB gzip)[39m
+[90m  ├─ .output/server/chunks/_/blog.index-CS9rNZxX.mjs (3.21 kB)[39m[90m (1.01 kB gzip)[39m
+[90m  ├─ .output/server/chunks/_/blog.index-CS9rNZxX.mjs.map (2.06 kB)[39m[90m (741 B gzip)[39m
+[90m  ├─ .output/server/chunks/_/blog.index-DPOTJ-C6.mjs (4.21 kB)[39m[90m (1.35 kB gzip)[39m
+[90m  ├─ .output/server/chunks/_/blog.index-DPOTJ-C6.mjs.map (3.15 kB)[39m[90m (1.12 kB gzip)[39m
+[90m  ├─ .output/server/chunks/_/contact-DMix--PV.mjs (3.69 kB)[39m[90m (1.32 kB gzip)[39m
+[90m  ├─ .output/server/chunks/_/contact-DMix--PV.mjs.map (1.88 kB)[39m[90m (526 B gzip)[39m
+[90m  ├─ .output/server/chunks/_/index-BiIa6AXS.mjs (3.47 kB)[39m[90m (1.12 kB gzip)[39m
+[90m  ├─ .output/server/chunks/_/index-BiIa6AXS.mjs.map (2.06 kB)[39m[90m (711 B gzip)[39m
+[90m  ├─ .output/server/chunks/_/index-BssUMmSe.mjs (4.61 kB)[39m[90m (1.5 kB gzip)[39m
+[90m  ├─ .output/server/chunks/_/index-BssUMmSe.mjs.map (3.25 kB)[39m[90m (1.13 kB gzip)[39m
+[90m  ├─ .output/server/chunks/_/MDXRenderer-Z2DLPpAT.mjs (4.79 kB)[39m[90m (1.37 kB gzip)[39m
+[90m  ├─ .output/server/chunks/_/MDXRenderer-Z2DLPpAT.mjs.map (3.62 kB)[39m[90m (997 B gzip)[39m
+[90m  ├─ .output/server/chunks/_/RelativeTime-DtdGmtXx.mjs (1.76 kB)[39m[90m (654 B gzip)[39m
+[90m  ├─ .output/server/chunks/_/RelativeTime-DtdGmtXx.mjs.map (1.96 kB)[39m[90m (671 B gzip)[39m
+[90m  ├─ .output/server/chunks/_/ssr.mjs (81.1 kB)[39m[90m (19.1 kB gzip)[39m
+[90m  ├─ .output/server/chunks/_/ssr.mjs.map (227 B)[39m[90m (176 B gzip)[39m
+[90m  ├─ .output/server/index.mjs (143 kB)[39m[90m (35.5 kB gzip)[39m
+[90m  └─ .output/server/package.json (6.55 kB)[39m[90m (1.79 kB gzip)[39m
+[36mΣ Total size:[39m 10.9 MB (3.75 MB gzip)
+[32m✔[39m You can preview this build using [36mbun run .output/server/index.mjs[39m                     [90mnitro[39m [90m12:22:12 PM[39m
+[32m✔[39m Client and Server bundles for TanStack Start have been successfully built.            [90mnitro[39m [90m12:22:12 PM[39m

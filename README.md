@@ -1,17 +1,47 @@
-# John Annunziato's Blog
+# JA3NYC Monorepo
 
-Personal blog built with TanStack Start.
+This is a Turborepo monorepo containing John Annunziato III's projects.
 
-## Development
+## Apps
+
+- **blog** (`@ja3nyc/blog`) - Personal blog built with TanStack Start, React, and TypeScript
+
+## Getting Started
 
 ```bash
-npm install
-npm run dev
+# Install dependencies
+bun install
+
+# Start development server for blog
+bun run blog:dev
+
+# Or start all apps
+bun run dev
+```
+
+## Building
+
+```bash
+# Build blog
+bun run blog:build
+
+# Or build all apps
+bun run build
+```
+
+## Project Structure
+
+```
+.
+├── apps/
+│   └── blog/          # Personal blog application
+├── packages/          # Shared packages (future)
+├── turbo.json         # Turborepo configuration
+└── package.json       # Root package.json
 ```
 
 ## Tech Stack
 
-- TanStack Start
 - React + TypeScript
 - Tailwind CSS
 - MDX for blog posts
