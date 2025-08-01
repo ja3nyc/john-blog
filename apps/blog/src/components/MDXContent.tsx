@@ -1,28 +1,55 @@
-import React, { lazy, Suspense } from 'react'
-import { MDXRenderer } from './MDXRenderer'
-
-// Import all MDX files statically to avoid dynamic import issues
-const MDXComponents = {
-  'mdx-components-showcase': lazy(() => import('../../content/mdx/mdx-components-showcase.mdx')),
-  'tanstack-vs-nextjs': lazy(() => import('../../content/mdx/tanstack-vs-nextjs.mdx')),
-}
+import React, { useState, useEffect } from 'react'
+import { evaluate } from '@mdx-js/mdx'
+import * as runtime from 'react/jsx-runtime'
+import remarkGfm from 'remark-gfm'
+import rehypeHighlight from 'rehype-highlight'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import { mdxComponents } from './mdx'
 
 interface MDXContentProps {
-  slug: string
+  content: string
 }
 
-export function MDXContent({ slug }: MDXContentProps) {
-  const Component = MDXComponents[slug as keyof typeof MDXComponents]
-  
-  if (!Component) {
-    return <div>MDX content not found for: {slug}</div>
+export function MDXContent({ content }: MDXContentProps) {
+  const [Component, setComponent] = useState<React.ComponentType | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function compileContent() {
+      try {
+        const { default: MDXComponent } = await evaluate(content, {
+          ...runtime,
+          remarkPlugins: [remarkGfm],
+          rehypePlugins: [
+            rehypeHighlight,
+            rehypeSlug,
+            [rehypeAutolinkHeadings, { behavior: 'wrap' }]
+          ],
+          development: process.env.NODE_ENV === 'development'
+        })
+        
+        // Create a wrapper component that provides the MDX components
+        const WrappedComponent = (props: any) => (
+          <MDXComponent components={mdxComponents} {...props} />
+        )
+        
+        setComponent(() => WrappedComponent)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to compile MDX')
+      }
+    }
+
+    compileContent()
+  }, [content])
+
+  if (error) {
+    return <div className="text-red-500">Error compiling MDX: {error}</div>
   }
 
-  return (
-    <MDXRenderer>
-      <Suspense fallback={<div className="animate-pulse">Loading...</div>}>
-        <Component />
-      </Suspense>
-    </MDXRenderer>
-  )
+  if (!Component) {
+    return <div className="animate-pulse">Loading...</div>
+  }
+
+  return <Component />
 }

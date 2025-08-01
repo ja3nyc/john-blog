@@ -105,7 +105,7 @@ function BlogPost() {
         prose-th:border prose-th:border-border prose-th:bg-muted prose-th:px-4 prose-th:py-3 prose-th:font-semibold
         prose-td:border prose-td:border-border prose-td:px-4 prose-td:py-3">
 {post.type === 'mdx' ? (
-          <MDXContent slug={post.slug} />
+          <MDXContent content={post.content} />
         ) : (
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
         )}
