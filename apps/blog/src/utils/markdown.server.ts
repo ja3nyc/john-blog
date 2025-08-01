@@ -106,8 +106,9 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     let contentHtml: string
 
     if (isMdx) {
-      // For MDX files, strip frontmatter and return content for client-side rendering
-      contentHtml = matterResult.content
+      // For MDX files, we'll let Vite handle the compilation
+      // Just return empty content since we'll import the component directly
+      contentHtml = ''
     } else {
       // Process regular markdown
       const processedContent = await remark()
