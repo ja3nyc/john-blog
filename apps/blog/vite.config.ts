@@ -2,36 +2,17 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
-import mdx from '@mdx-js/rollup'
-import remarkGfm from 'remark-gfm'
-import remarkFrontmatter from 'remark-frontmatter'
-import rehypeHighlight from 'rehype-highlight'
-import rehypeSlug from 'rehype-slug'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import contentCollections from '@content-collections/vite'
 
 export default defineConfig({
   plugins: [
+    contentCollections(),
     tsconfigPaths(),
-    {
-      ...mdx({
-        remarkPlugins: [remarkGfm, remarkFrontmatter],
-        rehypePlugins: [
-          rehypeHighlight,
-          rehypeSlug,
-          [rehypeAutolinkHeadings, { behavior: 'wrap' }]
-        ],
-        providerImportSource: '@mdx-js/react',
-      }),
-      enforce: 'pre'
-    },
-    tanstackStart({
+    tanstackStart({ 
       target: 'bun',
-      customViteReactPlugin: true,
+      customViteReactPlugin: true 
     }),
-    viteReact({
-      include: /\.(jsx|js|tsx|ts)$/,
-      exclude: /\.mdx$/,
-    })
+    viteReact()
   ],
   server: {
     port: 3000,

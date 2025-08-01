@@ -1,9 +1,4 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
-import { remark } from 'remark'
-import remarkGfm from 'remark-gfm'
-import remarkHtml from 'remark-html'
+import { allPosts } from 'content-collections'
 
 export interface BlogPost {
   slug: string
@@ -11,8 +6,9 @@ export interface BlogPost {
   date: string
   excerpt: string
   tags: string[]
-  content: string
-  type?: 'md' | 'mdx'
+  content?: string
+  mdx?: any
+  type: 'mdx'
 }
 
 export interface BlogPostMeta {
@@ -23,127 +19,53 @@ export interface BlogPostMeta {
   tags: string[]
 }
 
-function getPostsDirectory() {
-  return path.join(process.cwd(), 'content/blog')
-}
-
-function getMdxDirectory() {
-  return path.join(process.cwd(), 'content/mdx')
-}
-
 export async function getAllPosts(): Promise<BlogPostMeta[]> {
-  const postsDirectory = getPostsDirectory()
-  const mdxDirectory = getMdxDirectory()
-
-  // Get both .md and .mdx files
-  const mdFiles = fs.existsSync(postsDirectory) ? fs.readdirSync(postsDirectory).filter(f => f.endsWith('.md')) : []
-  const mdxFiles = fs.existsSync(mdxDirectory) ? fs.readdirSync(mdxDirectory).filter(f => f.endsWith('.mdx')) : []
-
-  const allPostsData = [
-    ...mdFiles.map((fileName) => {
-      const slug = fileName.replace(/\.md$/, '')
-      const fullPath = path.join(postsDirectory, fileName)
-      const fileContents = fs.readFileSync(fullPath, 'utf8')
-      const matterResult = matter(fileContents)
-
-      return {
-        slug,
-        title: matterResult.data.title,
-        date: matterResult.data.date,
-        excerpt: matterResult.data.excerpt,
-        tags: matterResult.data.tags || [],
-        type: 'md' as const,
-      }
-    }),
-    ...mdxFiles.map((fileName) => {
-      const slug = fileName.replace(/\.mdx$/, '')
-      const fullPath = path.join(mdxDirectory, fileName)
-      const fileContents = fs.readFileSync(fullPath, 'utf8')
-      const matterResult = matter(fileContents)
-
-      return {
-        slug,
-        title: matterResult.data.title,
-        date: matterResult.data.date,
-        excerpt: matterResult.data.excerpt,
-        tags: matterResult.data.tags || [],
-        type: 'mdx' as const,
+  // Content collections handles all the file reading and frontmatter parsing
+  return allPosts
+    .map(post => ({
+      slug: post.slug,
+      title: post.title,
+      date: post.date,
+      excerpt: post.excerpt,
+      tags: post.tags,
+    }))
+    .sort((a, b) => {
+      if (a.date < b.date) {
+        return 1
+      } else {
+        return -1
       }
     })
-  ]
-
-  // Sort posts by date
-  return allPostsData.sort((a, b) => {
-    if (a.date < b.date) {
-      return 1
-    } else {
-      return -1
-    }
-  })
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  try {
-    const postsDirectory = getPostsDirectory()
-    const mdxDirectory = getMdxDirectory()
-
-    // Try .mdx first, then .md
-    let fullPath = path.join(mdxDirectory, `${slug}.mdx`)
-    let isMdx = true
-
-    if (!fs.existsSync(fullPath)) {
-      fullPath = path.join(postsDirectory, `${slug}.md`)
-      isMdx = false
-
-      if (!fs.existsSync(fullPath)) {
-        return null
-      }
-    }
-
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const matterResult = matter(fileContents)
-
-    let contentHtml: string
-
-    if (isMdx) {
-      // For MDX files, we'll let Vite handle the compilation
-      // Just return empty content since we'll import the component directly
-      contentHtml = ''
-    } else {
-      // Process regular markdown
-      const processedContent = await remark()
-        .use(remarkGfm)
-        .use(remarkHtml, { sanitize: false })
-        .process(matterResult.content)
-
-      contentHtml = processedContent.toString()
-    }
-
-    return {
-      slug,
-      title: matterResult.data.title,
-      date: matterResult.data.date,
-      excerpt: matterResult.data.excerpt,
-      tags: matterResult.data.tags || [],
-      content: contentHtml,
-      type: isMdx ? 'mdx' : 'md',
-    }
-  } catch (error) {
-    console.error('Error processing post:', error)
+  const post = allPosts.find(p => p.slug === slug)
+  
+  if (!post) {
     return null
+  }
+
+  return {
+    slug: post.slug,
+    title: post.title,
+    date: post.date,
+    excerpt: post.excerpt,
+    tags: post.tags,
+    content: post.content,
+    mdx: post.mdx,
+    type: 'mdx',
   }
 }
 
 export async function getAllUniqueTags(): Promise<string[]> {
-  const allPosts = await getAllPosts()
   const tagSet = new Set<string>()
-
+  
   allPosts.forEach(post => {
     post.tags.forEach(tag => {
       tagSet.add(tag)
     })
   })
-
+  
   return Array.from(tagSet).sort()
 }
 
