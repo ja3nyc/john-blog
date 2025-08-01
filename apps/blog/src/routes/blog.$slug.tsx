@@ -2,7 +2,7 @@ import { createFileRoute, notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { type BlogPost } from '~/utils/markdown'
 import { getPostBySlug } from '~/utils/markdown.server'
-import { MDXRenderer } from '~/components/MDXRenderer'
+import { MDXContent } from '~/components/MDXContent'
 import { RelativeTime } from '~/components/RelativeTime'
 import { seo } from '~/utils/seo'
 import { getAbsoluteUrl } from '~/utils/url'
@@ -104,8 +104,8 @@ function BlogPost() {
         prose-table:border-collapse prose-table:border prose-table:border-border prose-table:my-8
         prose-th:border prose-th:border-border prose-th:bg-muted prose-th:px-4 prose-th:py-3 prose-th:font-semibold
         prose-td:border prose-td:border-border prose-td:px-4 prose-td:py-3">
-        {(post as any).type === 'mdx' ? (
-          <MDXRenderer source={(post as any).mdxSource} />
+{post.type === 'mdx' ? (
+          <MDXContent slug={post.slug} />
         ) : (
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
         )}

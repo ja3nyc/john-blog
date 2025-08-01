@@ -1,4 +1,5 @@
-import { MDXRemote } from 'next-mdx-remote'
+import React from 'react'
+import { MDXProvider } from '@mdx-js/react'
 import { mdxComponents } from './mdx'
 
 const components = {
@@ -6,9 +7,9 @@ const components = {
 }
 
 interface MDXRendererProps {
-  source: any // Serialized MDX source from next-mdx-remote
+  children: React.ReactNode
 }
 
-export function MDXRenderer({ source }: MDXRendererProps) {
-  return <MDXRemote {...source} components={components} />
+export function MDXRenderer({ children }: MDXRendererProps) {
+  return <MDXProvider components={components}>{children}</MDXProvider>
 }
