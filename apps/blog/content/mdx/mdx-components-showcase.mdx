@@ -1,0 +1,225 @@
+---
+title: "MDX Components Showcase: Building Interactive Blog Content"
+description: "A comprehensive demonstration of all custom MDX components for technical blog posts, including tweets, code diffs, performance charts, and more."
+date: "2025-01-31"
+tags: ["mdx", "react", "components", "performance", "ui"]
+---
+
+# MDX Components Showcase
+
+This blog post demonstrates all the custom MDX components available for creating rich, interactive technical content. Each component is designed to enhance the reader's experience and make complex information more digestible.
+
+## Tweet Embeds
+
+Sometimes you want to reference a specific tweet that sparked a discussion or provides important context:
+
+<Tweet id="1950255116516270279" />
+
+The Tweet component automatically embeds the tweet with proper theming and maintains the original formatting.
+
+## Code Diffs
+
+When showing improvements or fixes, side-by-side code comparisons are invaluable:
+
+<CodeDiff 
+  before={`// Old inefficient approach
+function processData(items) {
+  const results = [];
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].active) {
+      results.push(items[i].value * 2);
+    }
+  }
+  return results;
+}`}
+  after={`// Optimized functional approach
+function processData(items) {
+  return items
+    .filter(item => item.active)
+    .map(item => item.value * 2);
+}`}
+  language="javascript"
+/>
+
+The CodeDiff component highlights additions in green and deletions in red, making changes immediately apparent.
+
+## Performance Metrics
+
+<Callout type="info">
+Performance improvements are best demonstrated with concrete data. The MetricTable component makes it easy to compare before/after metrics.
+</Callout>
+
+<MetricTable 
+  data={[
+    { metric: "First Contentful Paint", before: 2.4, after: 1.2, improvement: "50% faster", unit: "s" },
+    { metric: "Largest Contentful Paint", before: 4.1, after: 2.3, improvement: "44% faster", unit: "s" },
+    { metric: "Total Blocking Time", before: 850, after: 120, improvement: "86% faster", unit: "ms" },
+    { metric: "Cumulative Layout Shift", before: 0.15, after: 0.02, improvement: "87% better" },
+    { metric: "Bundle Size", before: 245, after: 156, improvement: "36% smaller", unit: "KB" }
+  ]}
+/>
+
+Click on any column header to sort the data. This interactive table helps readers quickly identify the most significant improvements.
+
+## Interactive Performance Charts
+
+For time-series data or A/B testing results, the PerfChart component provides an interactive visualization:
+
+<PerfChart 
+  metric="Total Blocking Time"
+  before={[
+    { run: 1, value: 850 },
+    { run: 2, value: 920 },
+    { run: 3, value: 780 },
+    { run: 4, value: 890 },
+    { run: 5, value: 810 }
+  ]}
+  after={[
+    { run: 1, value: 120 },
+    { run: 2, value: 140 },
+    { run: 3, value: 110 },
+    { run: 4, value: 130 },
+    { run: 5, value: 125 }
+  ]}
+/>
+
+Toggle between "Before", "After", or "Both" views to analyze the performance impact across multiple test runs.
+
+## Callouts for Important Information
+
+<Callout type="warning">
+**Common Pitfall**: Don't rely solely on Lighthouse scores in development mode. Always test performance in production builds with realistic network conditions.
+</Callout>
+
+<Callout type="success">
+**Pro Tip**: Use the Performance tab in Chrome DevTools alongside Lighthouse for a complete picture of your app's performance characteristics.
+</Callout>
+
+<Callout type="error">
+**Critical Issue**: Avoid blocking the main thread with synchronous operations. Use Web Workers for heavy computations.
+</Callout>
+
+## File Structure Visualization
+
+When discussing refactoring or project structure changes, the FileTree component provides a clear visual representation:
+
+<FileTree 
+  root={{
+    name: "src",
+    type: "directory",
+    children: [
+      {
+        name: "components",
+        type: "directory",
+        children: [
+          { name: "Header.tsx", type: "file", status: "modified" },
+          { name: "Footer.tsx", type: "file" },
+          { name: "mdx", type: "directory", children: [
+            { name: "Tweet.tsx", type: "file", status: "added" },
+            { name: "CodeDiff.tsx", type: "file", status: "added" },
+            { name: "MetricTable.tsx", type: "file", status: "added" }
+          ]}
+        ]
+      },
+      {
+        name: "utils",
+        type: "directory", 
+        children: [
+          { name: "performance.ts", type: "file", status: "added" },
+          { name: "legacy-helpers.ts", type: "file", status: "deleted" }
+        ]
+      },
+      { name: "app.tsx", type: "file", status: "modified" }
+    ]
+  }}
+/>
+
+The color coding makes it easy to see what files were added (green), modified (yellow), or deleted (red).
+
+## Tabbed Code Examples
+
+When showing multiple approaches or comparing frameworks, tabs keep the content organized:
+
+<Tabs defaultTab={0}>
+  <Tab label="TanStack Router">
+    ```typescript
+    import { createFileRoute } from '@tanstack/react-router'
+    
+    export const Route = createFileRoute('/blog/$slug')({
+      component: BlogPost,
+      loader: async ({ params }) => {
+        const post = await fetchBlogPost(params.slug)
+        return { post }
+      }
+    })
+    
+    function BlogPost() {
+      const { post } = Route.useLoaderData()
+      return <article>{post.content}</article>
+    }
+    ```
+  </Tab>
+  <Tab label="Next.js Equivalent">
+    ```typescript
+    // pages/blog/[slug].tsx
+    import { GetStaticProps, GetStaticPaths } from 'next'
+    
+    export default function BlogPost({ post }) {
+      return <article>{post.content}</article>
+    }
+    
+    export const getStaticProps: GetStaticProps = async ({ params }) => {
+      const post = await fetchBlogPost(params.slug)
+      return { props: { post } }
+    }
+    
+    export const getStaticPaths: GetStaticPaths = async () => {
+      const posts = await getAllPosts()
+      return {
+        paths: posts.map(post => ({ params: { slug: post.slug } })),
+        fallback: false
+      }
+    }
+    ```
+  </Tab>
+  <Tab label="Remix Approach">
+    ```typescript
+    // routes/blog.$slug.tsx
+    import { LoaderFunctionArgs } from '@remix-run/node'
+    import { useLoaderData } from '@remix-run/react'
+    
+    export async function loader({ params }: LoaderFunctionArgs) {
+      const post = await fetchBlogPost(params.slug)
+      return { post }
+    }
+    
+    export default function BlogPost() {
+      const { post } = useLoaderData<typeof loader>()
+      return <article>{post.content}</article>
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Live Code Sandbox
+
+For complex examples that benefit from hands-on experimentation, embed a live CodeSandbox:
+
+<Sandbox repo="ja3nyc/llmgateway" height={600} />
+
+Readers can interact with the code directly, making changes and seeing results in real-time.
+
+## Conclusion
+
+These MDX components transform static blog posts into interactive learning experiences. They're particularly valuable for:
+
+- **Technical tutorials** that need code examples and comparisons
+- **Performance case studies** with metrics and visualizations  
+- **Architecture discussions** that benefit from file structure diagrams
+- **API documentation** with live examples
+
+<Callout type="info">
+All components are fully responsive and follow your site's design system. They automatically adapt to dark/light themes and maintain accessibility standards.
+</Callout>
+
+The combination of these components allows you to create comprehensive, engaging technical content that helps readers understand complex concepts through multiple formats and interactive elements.

@@ -1,6 +1,87 @@
+@import 'highlight.js/styles/github-dark.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Simple styling for code blocks in tabs */
+.hljs {
+  background: transparent !important;
+  padding: 1rem;
+  color: hsl(var(--foreground));
+}
+
+.hljs code {
+  background: transparent !important;
+}
+
+/* Enhanced reading experience */
+.prose {
+  /* Improve text rendering */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Better focus states for accessibility */
+.prose a:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection styling */
+::selection {
+  background-color: hsl(var(--primary) / 0.2);
+  color: hsl(var(--foreground));
+}
+
+/* Enhanced prose styling for optimal reading */
+.prose {
+  /* Better text spacing for readability */
+  word-spacing: 0.05em;
+  letter-spacing: 0.01em;
+}
+
+/* Improved heading anchor links */
+.prose h1:hover .anchor,
+.prose h2:hover .anchor,
+.prose h3:hover .anchor,
+.prose h4:hover .anchor {
+  opacity: 1;
+}
+
+.prose .anchor {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  margin-left: 0.5rem;
+  color: hsl(var(--muted-foreground));
+  text-decoration: none;
+}
+
+/* Better code block styling */
+.prose pre {
+  position: relative;
+}
+
+/* Smooth transitions for interactive elements */
+.prose a,
+.prose button,
+[role="button"] {
+  transition: all 0.2s ease;
+}
+
+/* Focus ring for better accessibility */
+.prose *:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
 
 @layer base {
   :root {
@@ -20,10 +101,12 @@
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
-    --radius: 0.5rem;
+    --radius: 0rem;
   }
 
   .dark {
@@ -43,6 +126,8 @@
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 98%;
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;

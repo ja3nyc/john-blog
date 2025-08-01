@@ -1,12 +1,8 @@
 import { MDXRemote } from 'next-mdx-remote'
-import { Counter } from './mdx/Counter'
-import { CodeBlock } from './mdx/CodeBlock'
-import { Callout } from './mdx/Callout'
+import { mdxComponents } from './mdx'
 
 const components = {
-  Counter,
-  CodeBlock,
-  Callout,
+  ...mdxComponents,
 }
 
 interface MDXRendererProps {

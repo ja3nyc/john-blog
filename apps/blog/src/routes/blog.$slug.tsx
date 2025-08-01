@@ -6,6 +6,7 @@ import { MDXRenderer } from '~/components/MDXRenderer'
 import { RelativeTime } from '~/components/RelativeTime'
 import { seo } from '~/utils/seo'
 import { getAbsoluteUrl } from '~/utils/url'
+import { calculateReadingTime } from '~/utils/reading-time'
 
 const getPost = createServerFn()
     .validator((slug: string) => slug)
@@ -48,24 +49,28 @@ function BlogPost() {
     const post = Route.useLoaderData()
 
     return (
-        <div className="space-y-8">
+        <div className="max-w-3xl mx-auto px-6 py-12">
             {/* Header */}
-            <header className="space-y-4">
-                <div className="space-y-2">
-                    <h1 className="text-2xl font-medium text-foreground">
+            <header className="space-y-6 mb-12">
+                <div className="space-y-4">
+                    <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
                         {post.title}
                     </h1>
-                    <div className="flex items-center justify-between">
-                        <RelativeTime 
-                            date={post.date}
-                            className="text-sm text-muted-foreground"
-                        />
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div className="flex items-center gap-4 text-base text-muted-foreground font-medium">
+                            <RelativeTime 
+                                date={post.date}
+                                className=""
+                            />
+                            <span className="text-muted-foreground/60">•</span>
+                            <span>{calculateReadingTime(post.content)}</span>
+                        </div>
                         {post.tags.length > 0 && (
-                            <div className="flex gap-3">
+                            <div className="flex flex-wrap gap-2">
                                 {post.tags.map((tag: string) => (
                                     <span
                                         key={tag}
-                                        className="text-sm text-muted-foreground"
+                                        className="px-3 py-1 text-sm bg-muted text-muted-foreground border border-border"
                                     >
                                         {tag}
                                     </span>
@@ -74,25 +79,31 @@ function BlogPost() {
                         )}
                     </div>
                 </div>
+                <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
             </header>
 
             {/* Content */}
-            <article className="prose max-w-none
-        prose-headings:font-medium prose-headings:text-foreground
-        prose-p:text-foreground prose-p:leading-relaxed
-        prose-a:text-foreground prose-a:no-underline hover:prose-a:text-muted-foreground prose-a:transition-colors
-        prose-strong:text-foreground prose-strong:font-medium
-        prose-code:text-foreground prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-normal prose-code:before:content-none prose-code:after:content-none
-        prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-pre:rounded-lg
-        prose-blockquote:border-l-border prose-blockquote:text-muted-foreground prose-blockquote:bg-muted/50 prose-blockquote:px-4 prose-blockquote:py-2 prose-blockquote:rounded-r-lg
-        prose-hr:border-border
-        prose-ul:text-foreground
-        prose-ol:text-foreground
-        prose-li:text-foreground
-        prose-h1:text-foreground
-        prose-h2:text-foreground
-        prose-h3:text-foreground
-        prose-h4:text-foreground">
+            <article className="prose prose-xl max-w-none
+        prose-headings:font-bold prose-headings:text-foreground prose-headings:tracking-tight prose-headings:scroll-mt-20
+        prose-h1:text-3xl prose-h1:mb-8 prose-h1:mt-16 prose-h1:first:mt-0
+        prose-h2:text-2xl prose-h2:mb-6 prose-h2:mt-12 prose-h2:border-b prose-h2:border-border prose-h2:pb-3
+        prose-h3:text-xl prose-h3:mb-4 prose-h3:mt-10
+        prose-h4:text-lg prose-h4:mb-3 prose-h4:mt-8
+        prose-p:text-foreground prose-p:leading-[1.8] prose-p:mb-8 prose-p:text-lg prose-p:font-normal
+        prose-a:text-foreground prose-a:underline prose-a:decoration-muted-foreground prose-a:underline-offset-4 hover:prose-a:decoration-foreground prose-a:transition-all prose-a:duration-200
+        prose-strong:text-foreground prose-strong:font-semibold
+        prose-em:text-foreground prose-em:italic
+        prose-code:text-foreground prose-code:bg-muted prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-base prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
+        prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-pre:rounded-lg prose-pre:p-6 prose-pre:overflow-x-auto prose-pre:my-8
+        prose-blockquote:border-l-4 prose-blockquote:border-l-border prose-blockquote:text-muted-foreground prose-blockquote:bg-muted/30 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:my-8 prose-blockquote:font-medium
+        prose-hr:border-border prose-hr:my-12 prose-hr:border-t-2
+        prose-ul:text-foreground prose-ul:space-y-3 prose-ul:my-8
+        prose-ol:text-foreground prose-ol:space-y-3 prose-ol:my-8
+        prose-li:text-foreground prose-li:text-lg prose-li:leading-[1.8] prose-li:mb-2
+        prose-img:rounded-lg prose-img:shadow-lg prose-img:border prose-img:border-border prose-img:my-8
+        prose-table:border-collapse prose-table:border prose-table:border-border prose-table:my-8
+        prose-th:border prose-th:border-border prose-th:bg-muted prose-th:px-4 prose-th:py-3 prose-th:font-semibold
+        prose-td:border prose-td:border-border prose-td:px-4 prose-td:py-3">
         {(post as any).type === 'mdx' ? (
           <MDXRenderer source={(post as any).mdxSource} />
         ) : (
@@ -101,12 +112,13 @@ function BlogPost() {
       </article>
 
             {/* Navigation */}
-            <footer className="pt-8 border-t border-border">
+            <footer className="mt-16 pt-8 border-t border-border">
                 <a 
                     href="/blog" 
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    className="inline-flex items-center gap-2 text-base text-muted-foreground hover:text-foreground transition-colors group"
                 >
-                    ← Back to writing
+                    <span className="group-hover:-translate-x-1 transition-transform">←</span>
+                    Back to writing
                 </a>
             </footer>
         </div>

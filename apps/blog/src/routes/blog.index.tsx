@@ -1,20 +1,26 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
-import { getAllPosts } from '~/utils/markdown.server'
+import { getAllPosts, getAllUniqueTags } from '~/utils/markdown.server'
 import { type BlogPostMeta } from '~/utils/markdown'
 import { RelativeTime } from '~/components/RelativeTime'
 import { seo } from '~/utils/seo'
 import { getAbsoluteUrl } from '~/utils/url'
+import { useState, useMemo } from 'react'
 
-const getPosts = createServerFn()
+const getPostsAndTags = createServerFn()
   .handler(async () => {
-    // Import server-only modules inside the handler
-    return await getAllPosts()
+    const allPosts = await getAllPosts()
+    const allTags = await getAllUniqueTags()
+    
+    return {
+      posts: allPosts,
+      allTags
+    }
   })
 
 export const Route = createFileRoute('/blog/')({
   component: Blog,
-  loader: () => getPosts(),
+  loader: () => getPostsAndTags(),
   head: () => {
     const ogImageUrl = getAbsoluteUrl('/api/og/blog');
     
@@ -34,7 +40,33 @@ export const Route = createFileRoute('/blog/')({
 })
 
 function Blog() {
-  const posts = Route.useLoaderData()
+  const { posts: allPosts, allTags } = Route.useLoaderData()
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
+
+  // Filter posts based on selected tags
+  const filteredPosts = useMemo(() => {
+    if (selectedTags.length === 0) {
+      return allPosts
+    }
+    return allPosts.filter(post => 
+      selectedTags.some(selectedTag => post.tags.includes(selectedTag))
+    )
+  }, [allPosts, selectedTags])
+
+  const handleTagClick = (tag: string) => {
+    setSelectedTags(current => {
+      const isSelected = current.includes(tag)
+      if (isSelected) {
+        return current.filter(t => t !== tag)
+      } else {
+        return [...current, tag]
+      }
+    })
+  }
+
+  const clearAllTags = () => {
+    setSelectedTags([])
+  }
 
   return (
     <div className="space-y-12">
@@ -47,9 +79,55 @@ function Blog() {
         </p>
       </div>
 
+      {/* Tag Filtering Section */}
+      {allTags.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-medium text-foreground">Filter by topic</h3>
+            {selectedTags.length > 0 && (
+              <button
+                onClick={clearAllTags}
+                className="text-xs text-primary hover:text-primary/80 transition-colors"
+              >
+                Clear filters
+              </button>
+            )}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {allTags.map((tag) => {
+              const isSelected = selectedTags.includes(tag)
+              return (
+                <button
+                  key={tag}
+                  onClick={() => handleTagClick(tag)}
+                  className={`
+                    px-3 py-1 text-xs border transition-all duration-200
+                    ${isSelected
+                      ? 'bg-foreground text-background border-foreground'
+                      : 'bg-background text-muted-foreground border-border hover:border-foreground/50 hover:text-foreground'
+                    }
+                  `}
+                >
+                  {tag}
+                </button>
+              )
+            })}
+          </div>
+          {selectedTags.length > 0 && (
+            <div className="text-sm text-muted-foreground">
+              Showing {filteredPosts.length} post{filteredPosts.length !== 1 ? 's' : ''} tagged with {selectedTags.map((tag, index) => (
+                <span key={tag}>
+                  "{tag}"{index < selectedTags.length - 1 ? (index === selectedTags.length - 2 ? ' or ' : ', ') : ''}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="space-y-8">
-        {posts.length > 0 ? (
-          posts.map((post: BlogPostMeta) => (
+        {filteredPosts.length > 0 ? (
+          filteredPosts.map((post: BlogPostMeta) => (
             <article key={post.slug} className="group">
               <div className="space-y-3">
                 <h2 className="text-lg text-foreground group-hover:text-muted-foreground transition-colors">
@@ -70,19 +148,43 @@ function Blog() {
                   {post.tags.length > 0 && (
                     <div className="flex gap-2">
                       {post.tags.slice(0, 2).map((tag) => (
-                        <span
+                        <button
                           key={tag}
-                          className="text-xs text-muted-foreground"
+                          onClick={() => handleTagClick(tag)}
+                          className="text-xs text-muted-foreground hover:text-primary transition-colors"
                         >
                           {tag}
-                        </span>
+                        </button>
                       ))}
+                      {post.tags.length > 2 && (
+                        <span className="text-xs text-muted-foreground/60">
+                          +{post.tags.length - 2} more
+                        </span>
+                      )}
                     </div>
                   )}
                 </div>
               </div>
             </article>
           ))
+        ) : selectedTags.length > 0 ? (
+          <div className="flex flex-col items-center justify-center py-16 text-center">
+            <div className="space-y-4 max-w-md">
+              <h3 className="text-lg font-medium text-foreground">
+                No posts found
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                No posts match the selected tags. Try exploring other topics or{' '}
+                <button 
+                  onClick={clearAllTags}
+                  className="text-primary hover:text-primary/80 transition-colors"
+                >
+                  clear the filters
+                </button>{' '}
+                to see all posts.
+              </p>
+            </div>
+          </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <div className="space-y-4 max-w-md">

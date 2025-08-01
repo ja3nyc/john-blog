@@ -151,6 +151,19 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   }
 }
 
+export async function getAllUniqueTags(): Promise<string[]> {
+  const allPosts = await getAllPosts()
+  const tagSet = new Set<string>()
+  
+  allPosts.forEach(post => {
+    post.tags.forEach(tag => {
+      tagSet.add(tag)
+    })
+  })
+  
+  return Array.from(tagSet).sort()
+}
+
 export function formatDate(dateString: string): string {
   const date = new Date(dateString)
   return date.toLocaleDateString('en-US', {
